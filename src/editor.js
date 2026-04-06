@@ -2969,10 +2969,11 @@ define(['bslGlobals', 'bslMetadata', 'snippets', 'bsl_language', 'vs/editor/edit
     editor.diffCount--;
     if (getOption('generateModificationEvent'))
       sendEvent('EVENT_CONTENT_CHANGED', '');
-    const disposable = diff_editor.onDidUpdateDiff(() => {
+    if (getOption('generateCompareCompleteEvent'))
+      disposable = diff_editor.onDidUpdateDiff(() => {
         disposable.dispose();
         sendEvent('EVENT_COMPARE_COMPLETE', {});
-    });
+      });
   }
 
   function createDiffRevertButtons(diff_editor) {
